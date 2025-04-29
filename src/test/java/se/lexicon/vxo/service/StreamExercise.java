@@ -39,7 +39,6 @@ public class StreamExercise {
     public void task2() {
         long amount = 0;
 
-        // todo: write your code here
         amount = people.stream().count();
 
         assertEquals(10000, amount);
@@ -55,7 +54,6 @@ public class StreamExercise {
                 .filter(people -> people.getLastName().equalsIgnoreCase("Andersson"))
                 .count();assertEquals(expected, amount);
 
-        // todo: write your code here
 
         assertEquals(expected, amount);
     }
@@ -84,8 +82,6 @@ public class StreamExercise {
         Set<LocalDate> dates = null;
 
         dates = people.stream().map(Person::getDateOfBirth).collect(Collectors.toCollection(TreeSet::new));
-        // todo: write your code here
-
 
         assertNotNull(dates);
         assertTrue(dates instanceof TreeSet);
@@ -101,7 +97,9 @@ public class StreamExercise {
 
         Person[] result = null;
 
-        // todo: write your code here
+        Person[] result = people.stream()
+                .filter(person -> person.getFirstName().equalsIgnoreCase("erik"))
+                .toArray(Person[]::new);
 
 
         assertNotNull(result);
