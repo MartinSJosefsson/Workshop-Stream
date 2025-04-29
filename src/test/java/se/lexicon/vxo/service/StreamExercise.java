@@ -97,7 +97,7 @@ public class StreamExercise {
 
         Person[] result = null;
 
-        Person[] result = people.stream()
+        result = people.stream()
                 .filter(person -> person.getFirstName().equalsIgnoreCase("erik"))
                 .toArray(Person[]::new);
 
@@ -115,7 +115,7 @@ public class StreamExercise {
 
         Optional<Person> optional = null;
 
-        // todo: write your code here
+        optional = people.stream().filter(person -> person.getPersonId() == 5436).findAny();
 
 
         assertNotNull(optional);
