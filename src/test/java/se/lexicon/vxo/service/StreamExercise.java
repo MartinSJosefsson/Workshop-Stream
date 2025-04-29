@@ -132,7 +132,9 @@ public class StreamExercise {
 
         Optional<Person> optional = null;
 
-        // todo: write your code here
+        optional = people.stream()
+                .min(Comparator.comparing(Person::getDateOfBirth));
+
 
         assertNotNull(optional);
         assertEquals(expectedBirthDate, optional.get().getDateOfBirth());
