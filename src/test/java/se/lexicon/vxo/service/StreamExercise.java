@@ -115,7 +115,7 @@ public class StreamExercise {
 
         Optional<Person> optional = null;
 
-        optional = people.stream().filter(person -> person.getPersonId() == 5436).findAny();
+        optional = people.stream().filter(person -> person.getPersonId() == 5436).findFirst();
 
 
         assertNotNull(optional);
