@@ -134,6 +134,7 @@ public class StreamExercise {
 
         optional = people.stream()
                 .min(Comparator.comparing(Person::getDateOfBirth));
+        System.out.println(optional);
 
 
         assertNotNull(optional);
