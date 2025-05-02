@@ -7,11 +7,13 @@ import se.lexicon.vxo.model.PersonDto;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.Year;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -201,7 +203,7 @@ public class StreamExercise {
         double expected = 54.42;
         double averageAge = 0;
 
-        averageAge = people.stream()
+       averageAge = people.stream()
                 .mapToInt(personToAge)
                 .average().orElse(0);
 
@@ -209,6 +211,15 @@ public class StreamExercise {
         assertEquals(expected, averageAge, .01);
     }
 
+   /*averageAge = (double) people.stream()
+            .mapToInt(personToAge)
+    .sum() / (long) people.size();
+    double averageAgetest = 0;
+    averageAgetest = people.stream().mapToInt(personToAge).average().orElse(0);
+    System.out.println(averageAgetest);
+
+    assertTrue(averageAge > 0);
+    assertEquals(expected, averageAge, .01);}*/
     /**
      * Extract from people a sorted string array of all firstNames that are palindromes. No duplicates
      */
@@ -236,7 +247,8 @@ public class StreamExercise {
         int expectedSize = 107;
         Map<String, List<Person>> personMap = null;
 
-        // todo: write your code here
+        personMap = people.stream()
+                .collect(Collectors.groupingBy(Person::getLastName));
 
         assertNotNull(personMap);
         assertEquals(expectedSize, personMap.size());
@@ -249,7 +261,16 @@ public class StreamExercise {
     public void task14() {
         LocalDate[] _2020_dates = null;
 
-        // todo: write your code here
+       /* _2020_dates = Stream.iterate(LocalDate.parse("2020-01-01"), (localDate -> localDate.plusDays(1)))
+                .limit(Year.of(2020).isLeap() ? 366 : 365)
+//              .peek(System.out::println)
+                .toArray(LocalDate[]::new);
+
+                */
+
+        _2020_dates = Stream.iterate(LocalDate.of(2020, 1, 1), date -> date.plusDays(1))
+        .limit(366)
+        .toArray(LocalDate[]::new);
 
         assertNotNull(_2020_dates);
         assertEquals(366, _2020_dates.length);
