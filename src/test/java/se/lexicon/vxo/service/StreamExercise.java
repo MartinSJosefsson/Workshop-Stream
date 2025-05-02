@@ -8,6 +8,8 @@ import se.lexicon.vxo.model.PersonDto;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
@@ -149,7 +151,15 @@ public class StreamExercise {
         int expectedSize = 892;
         LocalDate date = LocalDate.parse("1920-01-01");
 
+        Predicate<Person> bornBefore = (person) -> person.getDateOfBirth().isBefore(date);
+        Function<Person, PersonDto> personToDto = (person) -> new PersonDto(person.getPersonId(), person.getFirstName() + " " + person.getLastName());
+
         List<PersonDto> dtoList = null;
+
+        dtoList = people.stream()
+                .filter(bornBefore)
+                .map(personToDto)
+                .collect(Collectors.toList());
 
         // todo: write your code here
 
@@ -168,9 +178,11 @@ public class StreamExercise {
         String expected = "WEDNESDAY 19 DECEMBER 2012";
         int personId = 5914;
 
-        Optional<String> optional = null;
-
-        // todo: write your code here
+        Optional<String> optional = people.stream()
+                .filter(person -> person.getPersonId() == personId)
+                .map(Person::getDateOfBirth)
+                .map(date -> date.getDayOfWeek() + " " + date.getDayOfMonth() + " " + date.getMonth() + " " + date.getYear())
+                .findFirst();
 
 
         assertNotNull(optional);
@@ -189,7 +201,9 @@ public class StreamExercise {
         double expected = 54.42;
         double averageAge = 0;
 
-        // todo: write your code here
+        averageAge = people.stream()
+                .mapToInt(personToAge)
+                .average().orElse(0);
 
         assertTrue(averageAge > 0);
         assertEquals(expected, averageAge, .01);
@@ -204,7 +218,11 @@ public class StreamExercise {
 
         String[] result = null;
 
-        // todo: write your code here
+                result = people.stream().map(Person::getFirstName)
+                .filter(name -> new StringBuilder(name).reverse().toString().equalsIgnoreCase(name))
+                .distinct()
+                .sorted()
+                .toArray(String[]::new);
 
         assertNotNull(result);
         assertArrayEquals(expected, result);
